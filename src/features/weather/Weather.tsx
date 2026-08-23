@@ -58,7 +58,7 @@ export const Weather = () => {
           data && (
             <>
               <div className="flex flex-col justify-center gap-2">
-                <h4><MapPin size={20} className='inline-block' /> {data.name}, {data.sys.country}</h4>
+                <h4 className='text-center'><MapPin size={20} className='inline-block' /> {data.name}, {data.sys.country}</h4>
                 <h4 className='text-xl text-center'>{getMonthAndDate(data.dt)}</h4>
                 <div className="flex justify-center gap-2">
                   <img src={`https://openweathermap.org/payload/api/media/file/${data.weather[0].icon}.png`} alt={data.weather[0].description} className='w-10 inline-block rounded-full bg-gray-500'/>
