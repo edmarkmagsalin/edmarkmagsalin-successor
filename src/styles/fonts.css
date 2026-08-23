@@ -1,0 +1,41 @@
+/* Regular weight */
+@font-face {
+  font-family: "CourierPrime";
+  src: url("../assets/fonts/CourierPrime-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bold weight */
+@font-face {
+  font-family: "CourierPrime";
+  src: url("../assets/fonts/CourierPrime-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bold weight Italic */
+@font-face {
+  font-family: "CourierPrime";
+  src: url("../assets/fonts/CourierPrime-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Italic style (Will automatically pair with Regular weight) */
+@font-face {
+  font-family: "CourierPrime";
+  src: url("../assets/fonts/CourierPrime-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* MAP THE FAMILY TO TAILWIND V4's MONO DEFAULT */
+@theme {
+  /* This completely overrides Tailwind's default font across your whole app */
+  --font-mono: "CourierPrime", Monaco, Consolas, monospace;
+}

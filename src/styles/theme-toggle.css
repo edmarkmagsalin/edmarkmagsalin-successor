@@ -1,0 +1,48 @@
+@utility dark-theme-background {
+  background:
+  rgba(41, 41, 41, 1)
+    radial-gradient(circle,rgba(0, 0, 0, 1) 0%, rgba(41, 41, 41, 1) 100%)
+    center / cover
+    no-repeat
+    fixed;
+  color: #F4F4F5;
+  transition: color .4s;
+}
+
+@utility light-theme-background {
+  background: 
+    rgba(84, 84, 84, 1)
+    radial-gradient(circle,rgba(255, 255, 255, 1) 0%, rgba(84, 84, 84, 1) 100%)
+    center / cover
+    no-repeat
+    fixed;
+  color: #141414;
+  transition: color .4s;
+}
+a {
+  @apply opacity-60;
+  &:hover {
+    @apply opacity-100;
+  }
+  &.active {
+    @apply opacity-100;
+  }
+}
+
+html[data-theme='dark'] {
+  @apply dark-theme-background;
+}
+
+html[data-theme='light'] {
+  @apply light-theme-background;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    @apply dark-theme-background;
+  }
+
+  html[data-theme='light'] {
+    @apply light-theme-background;
+  }
+}

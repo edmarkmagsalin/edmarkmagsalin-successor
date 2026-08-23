@@ -1,0 +1,11 @@
+@utility pills {
+  @apply inline-flex items-center rounded-full backdrop-blur-md bg-white/20 inset-ring inset-ring-black/20
+}
+
+@utility control-center {
+  @apply flex justify-center rounded-full backdrop-blur-md bg-white/20 p-2 px-4
+}
+
+@utility page-container {
+  @apply flex flex-col gap-8 h-100 max-w-200
+}

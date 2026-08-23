@@ -1,0 +1,52 @@
+* {
+  @apply scrollbar-track-transparent scrollbar-thumb-white/20
+}
+
+body {
+  font-size: 16px;
+  user-select: none;
+}
+a {
+  font-weight: bold;
+}
+h1 {
+  font-size: 2.5rem;
+  line-height: 2.5rem;
+  font-family: var(--font-mono);
+}
+
+h2 {
+  font-size: 2rem;
+  line-height: 2rem;
+  font-family: var(--font-mono);
+}
+
+h3 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+p {
+  @apply pb-3
+}
+
+#myPhoto {
+  width: 150px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(1) blur(.6px);
+  transition: filter 1.5s;
+  &:hover {
+    filter: none;
+  }
+}
+
+dialog {
+  user-select: none;
+  color: inherit;
+  width: 600px;
+  &::backdrop {
+    backdrop-filter: blur(10px);
+  }
+}
