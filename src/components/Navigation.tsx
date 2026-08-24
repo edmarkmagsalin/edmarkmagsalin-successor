@@ -1,21 +1,51 @@
 import { NavLink } from 'react-router'
+import {
+  UserRound,
+  LayoutGrid,
+  Folder,
+  Terminal
+} from 'lucide-react'
+
+const navigationConfig = [
+  {
+    path: '/',
+    LinkText: 'ME',
+    icon: <UserRound />
+  },
+  {
+    path: '/skills',
+    LinkText: 'SKILLS',
+    icon: <Terminal />
+  },
+  {
+    path: '/projects',
+    LinkText: 'PROJECTS',
+    icon: <Folder />
+  },
+  {
+    path: '/webapps',
+    LinkText: 'WEATHER APP',
+    icon: <LayoutGrid />
+  },
+]
 
 export const Navigation = () => {
   return (
     <ul className="flex self-center gap-6 mx-6 text-xs">
-      <li>
-        <NavLink to='/'>ME</NavLink>
-      </li>
-      <li>
-        <NavLink to='/skills'>SKILLS</NavLink>
-      </li>
-      <li>
-        <NavLink to='/projects'>PROJECTS</NavLink>
-      </li>
-      <li>
-        {/* Update to be APPS when there will be app aside from weather app */}
-        <NavLink to='/webapps'>WEATHER APP</NavLink>
-      </li>
+      {
+        navigationConfig.map(nav => 
+          <li>
+            <NavLink to={nav.path}>
+              <span className='sm:hidden'>
+                {nav.icon}
+              </span>
+              <span className='hidden sm:flex'>
+                {nav.LinkText}
+              </span>
+            </NavLink>
+          </li>
+        )
+      }
     </ul>
   )
 }
