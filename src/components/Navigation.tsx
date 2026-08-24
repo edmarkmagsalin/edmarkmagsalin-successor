@@ -36,10 +36,10 @@ export const Navigation = () => {
         navigationConfig.map(nav => 
           <li>
             <NavLink to={nav.path}>
-              <span className='sm:hidden'>
+              <span className='lg:hidden'>
                 {nav.icon}
               </span>
-              <span className='hidden sm:flex'>
+              <span className='hidden lg:flex'>
                 {nav.LinkText}
               </span>
             </NavLink>

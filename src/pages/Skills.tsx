@@ -15,6 +15,7 @@ export const Skills = () => {
     {
       heading: 'Back-end',
       skills: [
+        'AWS',
         'Node.js',
         'Express',
         'PHP',
