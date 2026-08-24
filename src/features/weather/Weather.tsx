@@ -34,7 +34,15 @@ export const Weather = () => {
     isLoading
   } = useGetDataWeatherByLatLongQuery(
     coordinates ?? { lat: 0, long: 0 },
-    { skip: !coordinates }
+    {
+      skip: !coordinates,
+
+      // BACKGROUND SYNC: Auto-refetch weather data every 60,000ms (1 minute)
+      pollingInterval: 60000, 
+      
+      // BACKGROUND SYNC: Re-validate data when the user switches browser tabs back to your app
+      refetchOnFocus: true,
+    }
   )
   
   const getMonthAndDate = (dt: number) => {

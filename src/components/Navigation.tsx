@@ -34,7 +34,7 @@ export const Navigation = () => {
     <ul className="flex self-center gap-6 mx-6 text-xs">
       {
         navigationConfig.map(nav => 
-          <li>
+          <li title={nav.LinkText}>
             <NavLink to={nav.path}>
               <span className='lg:hidden'>
                 {nav.icon}
