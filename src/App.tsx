@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router"
 import { ThemeToggle, Navigation } from '@/components'
-import { Me, WebApps, Skills, Projects } from '@/pages'
+import { Me, WebApps, Skills, Projects, Devices } from '@/pages'
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
             <Route path='/' element={<Me />} />
             <Route path='/skills' element={<Skills />} />
             <Route path='/projects' element={<Projects />} />
+            <Route path='/devices' element={<Devices />} />
             <Route path='/webapps' element={<WebApps />} />
           </Routes>
         </div>

@@ -3,28 +3,34 @@ import {
   UserRound,
   LayoutGrid,
   Folder,
-  Terminal
+  Terminal,
+  Laptop
 } from 'lucide-react'
 
 const navigationConfig = [
   {
     path: '/',
-    LinkText: 'ME',
+    LinkText: 'Me',
     icon: <UserRound />
   },
   {
     path: '/skills',
-    LinkText: 'SKILLS',
+    LinkText: 'Skills',
     icon: <Terminal />
   },
   {
     path: '/projects',
-    LinkText: 'PROJECTS',
+    LinkText: 'Projects',
     icon: <Folder />
   },
   {
+    path: '/devices',
+    LinkText: 'Devices',
+    icon: <Laptop />
+  },
+  {
     path: '/webapps',
-    LinkText: 'WEATHER APP',
+    LinkText: 'Weather App',
     icon: <LayoutGrid />
   },
 ]
@@ -40,7 +46,7 @@ export const Navigation = () => {
                 {nav.icon}
               </span>
               <span className='hidden lg:flex'>
-                {nav.LinkText}
+                {nav.LinkText.toUpperCase()}
               </span>
             </NavLink>
           </li>
