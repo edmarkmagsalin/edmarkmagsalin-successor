@@ -39,7 +39,7 @@ export const Weather = () => {
       skip: !coordinates,
 
       // BACKGROUND SYNC: Auto-refetch weather data every 60,000ms (1 minute)
-      pollingInterval: 60000*60, 
+      pollingInterval: 60000, 
       
       // BACKGROUND SYNC: Re-validate data when the user switches browser tabs back to your app
       refetchOnFocus: true,

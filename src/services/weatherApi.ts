@@ -57,21 +57,19 @@ export interface DataWeatherResponse {
 }
 // Data Weather : END
 
-const APP_ID = import.meta.env.VITE_OPENWEATHER_APP_ID;
-
 // Define a service using a base URL and expected endpoints
 export const weatherApi = createApi({
   reducerPath: 'weatherApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.openweathermap.org' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/api/node' }),
   endpoints: (build) => ({
     getGeoReverseByLatLong: build.query<GeoResponse[], GeoReverseParams>({
-      query: ({lat, long, limit=1}) => `geo/1.0/reverse?lat=${lat}&lon=${long}&limit=${limit}&appid=${APP_ID}`,
+      query: ({lat, long, limit=1}) => `geo-reverse?lat=${lat}&long=${long}&limit=${limit}`,
     }),
     getGeoDirectByCityStateCountry: build.query<GeoResponse[], GeoDirectParams>({
-      query: ({city, state, country}) => `geo/1.0/direct?q=${city},${state},${country}&limit={limit}&&appid=${APP_ID}`,
+      query: ({city, state, country}) => `geo-direct?city=${city}&state=${state}&country=${country}`,
     }),
     getDataWeatherByLatLong: build.query<DataWeatherResponse, DataWeatherParams>({
-      query: ({lat, long}) => `data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${APP_ID}`,
+      query: ({lat, long}) => `current-weather?lat=${lat}&long=${long}`,
     })
   }),
 })
