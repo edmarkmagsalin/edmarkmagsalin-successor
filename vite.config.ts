@@ -14,8 +14,15 @@ export default defineConfig({
 
   server: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:5001',
+      // Express
+      '/api/v1': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+      },
+      // Django
+      '/api/v2': {
+        target: 'http://localhost:8000',
         changeOrigin: true,
         secure: false,
       }
