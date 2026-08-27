@@ -1,6 +1,7 @@
 import { useGetDataWeatherByLatLongQuery } from '@/services/weatherApi';
 import { useEffect, useState } from 'react';
 import { MapPin } from 'lucide-react'
+import { ExternalLink } from '@/components';
 
 export const Weather = () => {
   const [coordinates, setCoordinates] = useState<{
@@ -38,7 +39,7 @@ export const Weather = () => {
       skip: !coordinates,
 
       // BACKGROUND SYNC: Auto-refetch weather data every 60,000ms (1 minute)
-      pollingInterval: 60000, 
+      pollingInterval: 60000*60, 
       
       // BACKGROUND SYNC: Re-validate data when the user switches browser tabs back to your app
       refetchOnFocus: true,
@@ -57,34 +58,43 @@ export const Weather = () => {
   }
 
   return (
-    <div className="flex justify-center grow">
-      <div className="self-center">
-        {!coordinates && (<small>Getting location permission..</small>)}
-        {isLoading && <small>Loading data...</small>}
-        {error && <small>Error getting data.</small>}
-        {
-          data && (
-            <>
-              <div className="flex flex-col justify-center gap-2">
-                <h4 className='text-center'><MapPin size={20} className='inline-block' /> {data.name}, {data.sys.country}</h4>
-                <h4 className='text-xl text-center'>{getMonthAndDate(data.dt)}</h4>
-                <div className="flex justify-center gap-2">
-                  <img src={`https://openweathermap.org/payload/api/media/file/${data.weather[0].icon}.png`} alt={data.weather[0].description} className='w-10 inline-block rounded-full bg-gray-500'/>
-                  <small className='self-center'>
-                    {getWeatherDescription(data.weather[0].description)}
-                  </small>
+    <>
+      <div className="heading">
+        <h1 className='text-center'>{("What's the Weather?").toUpperCase()}</h1>
+        <div className='text-center'>
+          <small><ExternalLink href='https://openweathermap.org/' text='OpenWeather API'/></small>
+        </div>
+      </div>
+      <div className="flex justify-center h-80">
+        <div className="self-center">
+          {!coordinates && (
+            <small>Getting location permission..</small>)}
+          {isLoading && <small>Loading data...</small>}
+          {error && <small>Error getting data.</small>}
+          {
+            data && (
+              <div>
+                <div className="flex flex-col justify-center gap-2">
+                  <h4 className='text-center'><MapPin size={20} className='inline-block' /> {data.name}, {data.sys.country}</h4>
+                  <h4 className='text-xl text-center'>{getMonthAndDate(data.dt)}</h4>
+                  <div className="flex justify-center gap-2">
+                    <img src={`https://openweathermap.org/payload/api/media/file/${data.weather[0].icon}.png`} alt={data.weather[0].description} className='w-10 inline-block rounded-full bg-gray-500'/>
+                    <small className='self-center'>
+                      {getWeatherDescription(data.weather[0].description)}
+                    </small>
+                  </div>
+                </div>
+                <div className="text-center text-[3rem]">
+                  {getTempText(data.main.temp)}
+                </div>
+                <div className="text-center opacity-40 text-xs">
+                  Feels like {getTempText(data.main.feels_like)}
                 </div>
               </div>
-              <div className="text-center text-[3rem]">
-                {getTempText(data.main.temp)}
-              </div>
-              <div className="text-center opacity-40 text-xs">
-                Feels like {getTempText(data.main.feels_like)}
-              </div>
-            </>
-          )
-        }
+            )
+          }
+        </div>
       </div>
-    </div>
+    </>
   )
 }

@@ -2,10 +2,14 @@
   @apply inline-flex items-center rounded-full backdrop-blur-md bg-white/20 inset-ring inset-ring-black/20
 }
 
+@utility glass-pills {
+  @apply flex justify-center rounded-full backdrop-blur-xs bg-white/20 p-2 px-4;
+}
+
 @utility control-center {
   @apply flex justify-center rounded-full backdrop-blur-md bg-white/20 p-2 px-4
 }
 
 @utility page-container {
-  @apply flex flex-col gap-8 h-100 w-150
+  @apply flex flex-col gap-8 h-120 w-full max-w-200
 }

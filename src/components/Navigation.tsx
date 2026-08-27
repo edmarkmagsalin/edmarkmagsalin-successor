@@ -30,7 +30,7 @@ const navigationConfig = [
   },
   {
     path: '/webapps',
-    LinkText: 'Weather App',
+    LinkText: 'Web Apps',
     icon: <LayoutGrid />
   },
 ]
@@ -42,10 +42,10 @@ export const Navigation = () => {
         navigationConfig.map(nav => 
           <li title={nav.LinkText}>
             <NavLink to={nav.path}>
-              <span className='lg:hidden'>
+              <span className='sm:hidden'>
                 {nav.icon}
               </span>
-              <span className='hidden lg:flex'>
+              <span className='hidden sm:flex'>
                 {nav.LinkText.toUpperCase()}
               </span>
             </NavLink>
