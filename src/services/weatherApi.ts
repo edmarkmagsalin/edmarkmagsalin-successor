@@ -57,10 +57,13 @@ export interface DataWeatherResponse {
 }
 // Data Weather : END
 
+// Example API fetch in your React code
+const NODE_API_URL = import.meta.env.VITE_NODE_API_URL || 'http://localhost:3000';
+
 // Define a service using a base URL and expected endpoints
 export const weatherApi = createApi({
   reducerPath: 'weatherApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/api/node' }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${NODE_API_URL}/api/node` }),
   endpoints: (build) => ({
     getGeoReverseByLatLong: build.query<GeoResponse[], GeoReverseParams>({
       query: ({lat, long, limit=1}) => `geo-reverse?lat=${lat}&long=${long}&limit=${limit}`,
