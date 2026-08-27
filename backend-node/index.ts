@@ -10,7 +10,13 @@ if (!OPENWEATHER_APP_ID) {
   throw new Error('OPENWEATHER_APP_ID is not configured');
 }
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://edmarkmagsalin.netlify.app',
+    'https://edmarkmagsalin.onrender.com',
+    'http://localhost:5173'
+  ]
+}));
 app.use(express.json());
 
 app.get('/api/node/current-weather', async (req: Request, res: Response) => {
