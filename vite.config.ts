@@ -15,13 +15,13 @@ export default defineConfig({
   server: {
     proxy: {
       // Express
-      '/api/v1': {
+      '/api/node': {
         target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
       },
       // Django
-      '/api/v2': {
+      '/api/python': {
         target: 'http://localhost:8000',
         changeOrigin: true,
         secure: false,
