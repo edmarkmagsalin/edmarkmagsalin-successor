@@ -12,6 +12,16 @@ export default defineConfig({
     tailwindcss(),
   ],
 
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5001',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
+  },
+
   // For easy folder imports inside src
   resolve: {
     alias: {
