@@ -11,7 +11,7 @@ if (!OPENWEATHER_APP_ID) {
 }
 
 app.use(cors({
-  origin: ['https://onrender.com', 'http://localhost:5173'] 
+  origin: ['https://edmarkmagsalin.onrender.com', 'http://localhost:5173'] 
 }));
 app.use(express.json());
 
