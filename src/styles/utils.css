@@ -11,5 +11,5 @@
 }
 
 @utility page-container {
-  @apply flex flex-col gap-8 h-120 w-full max-w-200
+  @apply flex flex-col gap-8 h-120 w-full max-w-150 overflow-scroll
 }

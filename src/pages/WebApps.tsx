@@ -2,7 +2,7 @@ import { Weather } from '@/features/weather/Weather'
 
 export const WebApps = () => {
   return(
-    <div className='page-container bg-white/20 backdrop-blur-xl rounded-xl'>
+    <div className='page-container max-w-200 bg-white/20 backdrop-blur-xl rounded-xl'>
        <ul className='carousel scrollbar-none'>
           <li data-item='1'>
             <Weather />

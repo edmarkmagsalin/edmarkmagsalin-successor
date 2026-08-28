@@ -5,7 +5,7 @@ import { Me, WebApps, Skills, Projects, Devices } from '@/pages'
 function App() {
   return (
     <BrowserRouter>
-      <div className='container py-6 mx-auto border-0 px-2 flex flex-col min-h-screen overflow-hidden'>
+      <div className='container py-6 mx-auto border-0 px-2 flex flex-col min-h-dvh overflow-hidden'>
         <div className="grow flex gap-4 items-center justify-center mb-10 p-4">
           <Routes>
             <Route path='/' element={<Me />} />

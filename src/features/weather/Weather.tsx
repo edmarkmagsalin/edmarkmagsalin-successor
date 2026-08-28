@@ -60,7 +60,7 @@ export const Weather = () => {
   return (
     <>
       <div className="heading">
-        <h1 className='text-center'>{("What's the Weather?").toUpperCase()}</h1>
+        <h1 className='text-center'>{("Current City Weather").toUpperCase()}</h1>
         <div className='text-center'>
           <small><ExternalLink href='https://openweathermap.org/' text='OpenWeather API'/></small>
         </div>
@@ -69,7 +69,7 @@ export const Weather = () => {
         <div className="self-center">
           {!coordinates && (
             <small>Getting location permission..</small>)}
-          {isLoading && <small>Loading data...</small>}
+          {isLoading && <small>Loading data may take sometime due to inactivity of my freemium API...</small>}
           {error && <small>Error getting data.</small>}
           {
             data && (
@@ -78,7 +78,7 @@ export const Weather = () => {
                   <h4 className='text-center'><MapPin size={20} className='inline-block' /> {data.name}, {data.sys.country}</h4>
                   <h4 className='text-xl text-center'>{getMonthAndDate(data.dt)}</h4>
                   <div className="flex justify-center gap-2">
-                    <img src={`https://openweathermap.org/payload/api/media/file/${data.weather[0].icon}.png`} alt={data.weather[0].description} className='w-10 inline-block rounded-full bg-gray-500'/>
+                    <img src={`https://openweathermap.org/payload/api/media/file/${data.weather[0].icon}.png`} alt={data.weather[0].description} className='w-10 h-10 inline-block rounded-full bg-gray-500'/>
                     <small className='self-center'>
                       {getWeatherDescription(data.weather[0].description)}
                     </small>
