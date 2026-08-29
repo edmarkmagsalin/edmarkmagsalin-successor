@@ -31,15 +31,15 @@ export const Skills = () => {
   return (
     <div className='page-container'>
       {
-        skillsConfig.map(config => {
+        skillsConfig.map((config, index) => {
           return (
-            <div className='flex flex-col'>
+            <div key={index} className='flex flex-col'>
               <h2>{config.heading}</h2>
               <ul className='flex flex-wrap gap-2'>
                 {
-                  config.skills.map(skill => {
+                  config.skills.map((skill, index) => {
                     return (
-                      <li className='pills py-1 px-3'>{skill}</li>
+                      <li key={index} className='pills py-1 px-3'>{skill}</li>
                     )
                   })
                 }

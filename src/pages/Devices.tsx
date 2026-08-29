@@ -12,9 +12,9 @@ export const Devices = () => {
   return (
     <div className='page-container'>
       {
-        devicesConfig.map(config => {
+        devicesConfig.map((config, index) => {
           return (
-            <div className='flex flex-col'>
+            <div key={index} className='flex flex-col'>
               <h2>{config.name}</h2>
               <small>{config.description}</small>
             </div>

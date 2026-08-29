@@ -38,8 +38,8 @@ export const ThemeToggle = () => {
   return (
     <ul className="flex self-center gap-2">
       {
-        themeConfig.map(config => (
-          <li>
+        themeConfig.map((config, index) => (
+          <li key={index}>
             <a
               onClick={(event) => changeTheme(event, config.theme as Theme)}
               className={`cursor-pointer ${theme === config.theme as Theme && 'active'}`}

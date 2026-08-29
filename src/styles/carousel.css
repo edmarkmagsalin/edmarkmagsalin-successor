@@ -46,7 +46,7 @@ ul.carousel {
     translate: 1px 1px;
   }
   &::scroll-button(*):disabled {
-    opacity: 0.2;
+    opacity: 0;
     cursor: unset;
   }
   &::scroll-button(left) {

@@ -24,9 +24,9 @@ export const Projects = () => {
   return (
     <div className='page-container'>
       {
-        projectsConfig.map(config => {
+        projectsConfig.map((config, index) => {
           return (
-            <div className='flex flex-col'>
+            <div key={index} className='flex flex-col'>
               <h2>{config.title}</h2>
               <p>{config.description}</p>
               <p>
@@ -34,9 +34,9 @@ export const Projects = () => {
               </p>
               <ul className='flex flex-wrap gap-1'>
                 {
-                  config.madeUsing.map(item => {
+                  config.madeUsing.map((item, index) => {
                     return (
-                      <li className='pills py-1 px-1.5 text-xs'>{item}</li>
+                      <li key={index} className='pills py-1 px-1.5 text-xs'>{item}</li>
                     )
                   })
                 }
