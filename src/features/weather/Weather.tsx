@@ -64,7 +64,7 @@ export const Weather = () => {
       </div>
       <div className="flex flex-col justify-center w-full h-full mb-10 text-center">
         {!coordinates && <small>Getting location permission..</small>}
-        {isLoading && <small>Freemium API may take sometime. Apologies 🙇‍♂️</small>}
+        {isLoading && <small>Freemium API takes a while sometimes...</small>}
         {error && <small>Error getting data.</small>}
         {
           data && (
