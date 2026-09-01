@@ -1,5 +1,5 @@
 import myPhoto from '../assets/me.jpg'
-import { Socials, ExternalLink } from '@/components'
+import { Socials, ExternalLink, Dialog } from '@/components'
 import { useRef } from 'react'
 
 export const Me = () => {
@@ -15,21 +15,8 @@ export const Me = () => {
         <p>Web developer from Philippines <sup>🇵🇭</sup></p>
         <Socials />
       </div>
-      <dialog
-        ref={dialogRef}
-        onCancel={() => dialogRef.current?.close()}
-        onClick={(event) => {
-          if (event.target === event.currentTarget) {
-            dialogRef.current?.close()
-          }
-        }}
-        onKeyDown={(event) => {
-          if (event.key === 'Escape') {
-            event.preventDefault()
-            dialogRef.current?.close()
-          }
-        }}
-        className='fixed top-1/2 left-1/2 min-h-40 -translate-x-1/2 -translate-y-1/2 rounded-lg backdrop-blur-lg bg-white/20 p-8'
+      <Dialog
+        dialogRef={dialogRef}
       >
         <p>
           I've been a front-end developer for over <strong>{currentYear - 2017} years</strong> now, and for the last <strong>{currentYear - 2021} years</strong> I've been exposed to using <ExternalLink href='https://react.dev/' text='React'/> with <ExternalLink href='https://www.typescriptlang.org/' text='TypeScript'/>.
@@ -40,7 +27,7 @@ export const Me = () => {
         <p>
           Currently, I'm honing my skills in associating AI with my development process. To this day, I'm still improving at using AI.
         </p>
-      </dialog>
+      </Dialog>
     </div>
   )
 }

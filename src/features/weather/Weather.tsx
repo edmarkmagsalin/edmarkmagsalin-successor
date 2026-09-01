@@ -1,13 +1,14 @@
 import { useGetDataWeatherByLatLongQuery } from '@/services/weatherApi';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MapPin } from 'lucide-react'
-import { ExternalLink } from '@/components';
+import { Dialog, ExternalLink } from '@/components';
 
 export const Weather = () => {
   const [coordinates, setCoordinates] = useState<{
     lat: number;
     long: number;
   } | null>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -58,13 +59,14 @@ export const Weather = () => {
 
   return (
     <div className="flex flex-col justify-center align-middle w-full h-full">
-      <div className='text-center'>
+      <div className='text-center pb-2'>
         <h1>{("Current City Weather").toUpperCase()}</h1>
-        <small><ExternalLink href='https://openweathermap.org/' text='OpenWeather API' /></small>
+        <small className='text-xs cursor-pointer'><a onClick={() => dialogRef.current?.showModal()}>About</a>
+        </small>
       </div>
       <div className="flex flex-col justify-center w-full h-full mb-10 text-center">
         {!coordinates && <small>Getting location permission..</small>}
-        {isLoading && <small>Freemium API takes a while sometimes...</small>}
+        {isLoading && <small>Freemium web service API takes a while to wake up.</small>}
         {error && <small>Error getting data.</small>}
         {
           data && (
@@ -91,6 +93,22 @@ export const Weather = () => {
           )
         }
       </div>
+      <Dialog dialogRef={dialogRef}>
+        <div className='text-center'>
+          <h4 className='pb-2'>Created with</h4>
+          <ul className='flex flex-wrap gap-1 justify-center'>
+            <li>
+              <ExternalLink className='pills py-2 px-3 text-sm' href='https://openweathermap.org/api' text='OpenWeather API' />
+            </li>
+            <li>
+              <ExternalLink className='pills py-2 px-3 text-sm' href='https://expressjs.com/' text='ExpressJS' />
+            </li>
+            <li>
+              <ExternalLink className='pills py-2 px-3 text-sm' href='https://redux-toolkit.js.org/rtk-query/overview' text='RTK Query' />
+            </li>
+          </ul>
+        </div>
+      </Dialog>
     </div>
   )
 }

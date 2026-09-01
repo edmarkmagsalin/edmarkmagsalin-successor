@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { Dialog } from '@/components/Dialog';
+import { ExternalLink } from '@/components/ExternalLink';
+import { useRef, useState } from 'react'
 
 export const TicTacToe = () => {
   const [turn, setTurn] = useState('X');
   const [winner, setWinner] = useState<string | null>(null);
   const [turnLog, setTurnLog] = useState<string[]>([]);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const tableConfig = [
     [
       {id: '1', value: ''},
@@ -72,8 +75,12 @@ export const TicTacToe = () => {
   }
   return (
     <div className="flex flex-col justify-center align-middle w-full h-full">
-      <div className='text-center'>
+      <div className='text-center pb-2'>
         <h1>{("Tic Tac Toe").toUpperCase()}</h1>
+        <small className='text-xs cursor-pointer'><a onClick={() => dialogRef.current?.showModal()}>About</a>
+        </small>
+      </div>
+      <div className="flex flex-col justify-center w-full h-full mb-10 text-center">
         <h4>
           {
             winner
@@ -88,8 +95,6 @@ export const TicTacToe = () => {
         >
           Reset
         </small>
-      </div>
-      <div className="flex flex-col justify-center w-full h-full mb-10 text-center">
         <table className={`tictactoe ${winner ? 'opacity-30' : 'opacity-100'}`}>
           <tbody>
             {
@@ -114,6 +119,16 @@ export const TicTacToe = () => {
           </tbody>
         </table>
       </div>
+      <Dialog dialogRef={dialogRef}>
+        <div className='text-center'>
+          <h4 className='pb-2'>Created with</h4>
+          <ul className='flex flex-wrap gap-1 justify-center'>
+            <li>
+              <ExternalLink className='pills py-2 px-3 text-sm' href='https://react.dev/reference/react/useState' text='useState Hook' />
+            </li>
+          </ul>
+        </div>
+      </Dialog>
     </div>
   )
 }

@@ -8,6 +8,9 @@ ul.carousel {
   overflow-y: hidden;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
+  
+  /* Animates the slide movement on marker click */
+  scroll-behavior: smooth; 
 
   anchor-name: --my-carousel;
 
@@ -59,14 +62,14 @@ ul.carousel {
     left: calc(anchor(right) - 70px);
     bottom: calc(anchor(bottom) + 30px);
   }
-  & li {
+  & > li {
     list-style-type: none;
     flex: 0 0 100%;
     scroll-snap-align: center;
     padding: 20px;
   }
 
-  & li::scroll-marker {
+  & > li::scroll-marker {
     content: attr(data-item);
     width: 10px;
     height: 10px;
@@ -76,7 +79,7 @@ ul.carousel {
     overflow: hidden;
     text-indent: 16px;
   }
-  li::scroll-marker:target-current {
+  & > li::scroll-marker:target-current {
     background-color: var(--color-gray-500);
   }
 }
