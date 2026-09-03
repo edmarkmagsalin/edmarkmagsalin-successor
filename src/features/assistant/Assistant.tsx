@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, KeyboardEvent } from 'react'
 import { Send } from 'lucide-react'
 import { useSendMessageMutation } from '@/services/assistantApi'
@@ -15,6 +15,20 @@ export const Assistant = () => {
 	const [errorMessage, setErrorMessage] = useState<string | null>(null)
 	const [sendMessage, { isLoading }] = useSendMessageMutation()
 	const nextMessageId = useRef(0)
+  const [isSlowLoading, setIsSlowLoading] = useState(false)
+
+  useEffect(() => {
+    if (!isLoading) {
+      setIsSlowLoading(false)
+      return
+    }
+
+    const slowLoadingTimer = window.setTimeout(() => {
+      setIsSlowLoading(true)
+    }, 5000)
+
+    return () => window.clearTimeout(slowLoadingTimer)
+  }, [isLoading])
 
 	const addMessage = (role: ChatMessage['role'], content: string) => {
 		const nextMessage = {
@@ -75,7 +89,13 @@ export const Assistant = () => {
               </p>
             </div>
           ))}
-          {isLoading && <p className="text-left opacity-60">Thinking...</p>}
+          {isLoading && (
+            <p className="text-left opacity-60">
+              {isSlowLoading
+                ? 'Apologies, the API is taking longer than usual because the free service may be waking up. The next request should be faster.'
+                : 'Thinking...'}
+            </p>
+          )}
           {errorMessage && <p className="text-center text-red-700">{errorMessage}</p>}
         </div>
 

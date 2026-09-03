@@ -46,6 +46,21 @@ export const Weather = () => {
     }
   )
 
+  const [isSlowLoading, setIsSlowLoading] = useState(false);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setIsSlowLoading(false);
+      return;
+    }
+
+    const slowLoadingTimer = window.setTimeout(() => {
+      setIsSlowLoading(true);
+    }, 5000);
+
+    return () => window.clearTimeout(slowLoadingTimer);
+  }, [isLoading]);
+
   const getMonthAndDate = (dt: number) => {
     const date = new Date(dt * 1000).toString().split(' ');
     return date[1]+' '+date[2];
@@ -66,7 +81,13 @@ export const Weather = () => {
       </div>
       <div className="flex flex-col justify-center w-full h-full mb-10 text-center">
         {!coordinates && <small>Getting location permission..</small>}
-        {isLoading && <small>Freemium web service API takes a while to wake up.</small>}
+        {isLoading && (
+          <small>
+            {isSlowLoading
+              ? 'Apologies, the weather API is taking longer than usual because the free service may be waking up. The next request should be faster.'
+              : 'Getting weather...'}
+          </small>
+        )}
         {error && <small>Error getting data.</small>}
         {
           data && (
