@@ -1,0 +1,97 @@
+import { useRef, useState } from 'react'
+import type { FormEvent } from 'react'
+import { Send } from 'lucide-react'
+import { useSendMessageMutation } from '@/services/assistantApi'
+
+type ChatMessage = {
+	id: number;
+	role: 'user' | 'assistant';
+	content: string;
+};
+
+export const Assistant = () => {
+	const [message, setMessage] = useState('')
+	const [messages, setMessages] = useState<ChatMessage[]>([])
+	const [errorMessage, setErrorMessage] = useState<string | null>(null)
+	const [sendMessage, { isLoading }] = useSendMessageMutation()
+	const nextMessageId = useRef(0)
+
+	const addMessage = (role: ChatMessage['role'], content: string) => {
+		const nextMessage = {
+			id: nextMessageId.current++,
+			role,
+			content,
+		}
+		setMessages((currentMessages) => [...currentMessages, nextMessage])
+	}
+
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+		const trimmedMessage = message.trim()
+
+		if (!trimmedMessage || isLoading) {
+			return
+		}
+
+		setMessage('')
+		setErrorMessage(null)
+		addMessage('user', trimmedMessage)
+
+		try {
+			const response = await sendMessage({ message: trimmedMessage }).unwrap()
+			addMessage('assistant', response.answer)
+		} catch {
+			setErrorMessage('The assistant could not respond. Please try again.')
+		}
+	}
+
+	return (
+		<div className="flex flex-col justify-center align-middle w-full h-full">
+      <div className='text-center pb-2'>
+        <h1>{("AI Assistant").toUpperCase()}</h1>
+      </div>
+      
+      <div className="flex flex-col justify-center w-full h-full mb-15 text-center shadow-2xl rounded-xl p-4 chat-box">
+        <div className="flex-1 max-h-50 space-y-3 px-4 pb-4 overflow-y-scroll" aria-live="polite">
+          {messages.length === 0 && (
+            <div className="h-full flex items-center justify-center text-center opacity-50">
+              <small className="self-center text-center opacity-60">Ask my AI assistant about me.</small>
+            </div>
+          )}
+          {messages.map((chatMessage) => (
+            <div
+              className={`flex ${chatMessage.role === 'user' ? 'justify-end' : 'justify-start'} text-left`}
+              key={chatMessage.id}
+            >
+              <p className={`max-w-[85%] rounded-xl px-3 py-2 shadow-2xl ${chatMessage.role === 'user' ? 'bg-black/20' : 'bg-white/20'}`}>
+                {chatMessage.content}
+              </p>
+            </div>
+          ))}
+          {isLoading && <p className="text-left opacity-60">Thinking...</p>}
+          {errorMessage && <p className="text-center text-red-700">{errorMessage}</p>}
+        </div>
+
+        <form className="flex items-end gap-2" onSubmit={handleSubmit}>
+          <textarea
+            className="min-h-1 flex-1 resize-none rounded-xl bg-white/25 px-3 py-2 outline-none placeholder:opacity-50"
+            id="assistant-message"
+            onChange={(event) => setMessage(event.target.value)}
+            placeholder="Ask a question me..."
+            rows={1}
+            value={message}
+          />
+          <button
+            aria-label="Send message"
+            className="rounded-full bg-black/15 p-3 disabled:opacity-40 cursor-pointer"
+            disabled={isLoading || !message.trim()}
+            title="Send message"
+            type="submit"
+          >
+            <Send size={15} />
+          </button>
+        </form>
+      </div>
+		</div>
+	)
+}

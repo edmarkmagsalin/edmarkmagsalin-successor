@@ -1,9 +1,12 @@
-import { Weather, TicTacToe } from '@/features'
+import { Assistant, Weather, TicTacToe } from '@/features'
 
 export const WebApps = () => {
   return(
     <div className='page-container max-w-200 bg-white/20 backdrop-blur-xl rounded-xl'>
        <ul className='carousel scrollbar-none'>
+          <li>
+            <Assistant />
+          </li>
           <li>
             <Weather />
           </li>
