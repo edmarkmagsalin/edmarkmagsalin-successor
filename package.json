@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "backend:python:dev": "cd backend-python && python3 -m uvicorn main:app --reload --port 8000",
+    "backend:node:dev": "cd backend-node && npm run dev",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
