@@ -58,6 +58,7 @@ mdurl==0.1.2
 nest-asyncio==1.6.0
 numpy==2.3.2
 opack2==0.0.1
+openai>=1.66.0,<2
 orjson==3.10.15
 packaging==24.2
 parameter-decorators==0.0.2
