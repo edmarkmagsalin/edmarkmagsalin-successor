@@ -1,13 +1,42 @@
 import { useEffect, useRef, useState } from 'react'
-import type { FormEvent, KeyboardEvent } from 'react'
+import type { FormEvent, KeyboardEvent, ReactNode } from 'react'
 import { Send } from 'lucide-react'
 import { useSendMessageMutation } from '@/services/assistantApi'
+import { ExternalLink } from '@/components'
 
 type ChatMessage = {
 	id: number;
 	role: 'user' | 'assistant';
 	content: string;
 };
+
+const LINK_PATTERN = /\[([^\]]+)\]\(((?:https?:\/\/|mailto:)[^\s)]+)\)|((?:https?:\/\/|mailto:)[^\s]+)/g
+
+const renderMessageContent = (content: string): ReactNode[] => {
+  const renderedContent: ReactNode[] = []
+  let lastIndex = 0
+
+  for (const match of content.matchAll(LINK_PATTERN)) {
+    const matchIndex = match.index ?? 0
+    const linkText = match[1] ?? match[3]
+    const linkUrl = match[2] ?? match[3]
+
+    if (matchIndex > lastIndex) {
+      renderedContent.push(content.slice(lastIndex, matchIndex))
+    }
+
+    renderedContent.push(
+      <ExternalLink href={linkUrl} text={linkText} key={`${linkUrl}-${matchIndex}`} />
+    )
+    lastIndex = matchIndex + match[0].length
+  }
+
+  if (lastIndex < content.length) {
+    renderedContent.push(content.slice(lastIndex))
+  }
+
+  return renderedContent
+}
 
 export const Assistant = () => {
 	const [message, setMessage] = useState('')
@@ -85,7 +114,7 @@ export const Assistant = () => {
               key={chatMessage.id}
             >
               <p className={`max-w-[85%] rounded-xl px-3 py-2 shadow-2xl ${chatMessage.role === 'user' ? 'bg-black/20' : 'bg-white/20'}`}>
-                {chatMessage.content}
+                {renderMessageContent(chatMessage.content)}
               </p>
             </div>
           ))}
