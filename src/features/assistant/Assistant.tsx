@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import type { FormEvent } from 'react'
+import type { FormEvent, KeyboardEvent } from 'react'
 import { Send } from 'lucide-react'
 import { useSendMessageMutation } from '@/services/assistantApi'
 
@@ -45,6 +45,13 @@ export const Assistant = () => {
 		}
 	}
 
+  const handleMessageKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault()
+      event.currentTarget.form?.requestSubmit()
+    }
+  }
+
 	return (
 		<div className="flex flex-col justify-center align-middle w-full h-full">
       <div className='text-center pb-2'>
@@ -76,6 +83,7 @@ export const Assistant = () => {
           <textarea
             className="min-h-1 flex-1 resize-none rounded-xl bg-white/25 px-3 py-2 outline-none placeholder:opacity-50"
             id="assistant-message"
+      			onKeyDown={handleMessageKeyDown}
             onChange={(event) => setMessage(event.target.value)}
             placeholder="Ask a question me..."
             rows={1}
