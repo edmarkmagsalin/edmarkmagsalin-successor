@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, KeyboardEvent, ReactNode } from 'react'
 import { Send } from 'lucide-react'
 import { useSendMessageMutation } from '@/services/assistantApi'
-import { ExternalLink } from '@/components'
+import { Dialog, ExternalLink } from '@/components'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { addMessage, clearMessages } from './assistantSlice'
 
 const LINK_PATTERN = /\[([^\]]+)\]\(((?:https?:\/\/|mailto:)[^\s)]+)\)|((?:https?:\/\/|mailto:)[^\s]+)/g
+
+const getGreeting = () => new Date().getHours() < 12 ? 'Good morning! ☀️' : 'Good evening! 🌙'
 
 const renderMessageContent = (content: string): ReactNode[] => {
   const renderedContent: ReactNode[] = []
@@ -41,6 +43,8 @@ export const Assistant = () => {
 	const [errorMessage, setErrorMessage] = useState<string | null>(null)
 	const [sendMessage, { isLoading }] = useSendMessageMutation()
   const [isSlowLoading, setIsSlowLoading] = useState(false)
+
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
     if (!isLoading) {
@@ -91,16 +95,15 @@ export const Assistant = () => {
 		<div className="flex flex-col justify-center align-middle w-full h-full">
       <div className='text-center pb-2'>
         <h1>{("AI Assistant").toUpperCase()}</h1>
-        <button aria-label="Clear messages" onClick={handleClearMessages} title="Clear messages" type="button">
-          Clear messages
-        </button>
+        <small className="text-xs cursor-pointer"><a onClick={handleClearMessages}>Clear Messages</a></small> | <small className='text-xs cursor-pointer'><a onClick={() => dialogRef.current?.showModal()}>About</a>
+        </small>
       </div>
       
       <div className="flex flex-col justify-center w-full h-full mb-10 px-4">
         <div className="flex-1 max-h-50 space-y-3 px-4 pb-4 overflow-y-scroll" aria-live="polite">
           {messages.length === 0 && (
             <div className="h-full flex items-center justify-center text-center opacity-50">
-              <small className="self-center text-center opacity-60">Ask my AI assistant about me.</small>
+              <p className="self-center text-center">{getGreeting()}</p>
             </div>
           )}
           {messages.map((chatMessage) => (
@@ -129,7 +132,7 @@ export const Assistant = () => {
             id="assistant-message"
       			onKeyDown={handleMessageKeyDown}
             onChange={(event) => setMessage(event.target.value)}
-            placeholder="Ask a question me..."
+            placeholder="Ask a question about Edmark..."
             rows={1}
             value={message}
           />
@@ -144,6 +147,20 @@ export const Assistant = () => {
           </button>
         </form>
       </div>
+
+      <Dialog dialogRef={dialogRef}>
+        <div className='text-center'>
+          <h4 className='pb-2'>Created with</h4>
+          <ul className='flex flex-wrap gap-1 justify-center'>
+            <li>
+              <ExternalLink className='pills py-2 px-3 text-sm' href='https://groq.com/' text='Groq' />
+            </li>
+            <li>
+              <ExternalLink className='pills py-2 px-3 text-sm' href='https://www.python.org/' text='Python' />
+            </li>
+          </ul>
+        </div>
+      </Dialog>
 		</div>
 	)
 }
