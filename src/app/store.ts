@@ -3,11 +3,13 @@ import { weatherApi } from '@/services/weatherApi'
 import { assistantApi } from '@/services/assistantApi'
 import weatherReducer from '@/features/weather/weatherSlice'
 import assistantReducer from '@/features/assistant/assistantSlice'
+import ticTacToeReducer from '@/features/tictactoe/tictactoeSlice'
 
 export const store = configureStore({
   reducer: {
     weather: weatherReducer,
     assistant: assistantReducer,
+    ticTacToe: ticTacToeReducer,
     [weatherApi.reducerPath]: weatherApi.reducer,
     [assistantApi.reducerPath]: assistantApi.reducer
   },

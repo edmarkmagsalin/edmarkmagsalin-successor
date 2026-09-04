@@ -14,7 +14,8 @@ app.use(cors({
   origin: [
     'https://edmarkmagsalin.netlify.app',
     'https://edmarkmagsalin.onrender.com',
-    'http://localhost:5173'
+    'http://localhost:5173',
+    'http://localhost:5174'
   ]
 }));
 app.use(express.json());

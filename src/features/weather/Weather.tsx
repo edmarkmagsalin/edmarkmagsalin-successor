@@ -1,6 +1,6 @@
 import { useGetDataWeatherByLatLongQuery } from '@/services/weatherApi';
 import { useEffect, useRef, useState } from 'react';
-import { MapPin } from 'lucide-react'
+import { MapPin, RefreshCw } from 'lucide-react'
 import { Dialog, ExternalLink } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { setWeatherData } from './weatherSlice';
@@ -37,7 +37,9 @@ export const Weather = () => {
   const {
     data,
     error,
-    isLoading
+    isLoading,
+    isFetching,
+    refetch,
   } = useGetDataWeatherByLatLongQuery(
     coordinates ?? { lat: 0, long: 0 },
     {
@@ -104,8 +106,19 @@ export const Weather = () => {
         {
           weatherData && (
             <>
-              <h4 className='text-center'><MapPin size={20} className='inline-block' />
+              <h4 className='text-center'>
+                <MapPin size={20} className='inline-block' />
                 {weatherData.name}, {weatherData.sys.country}
+                <button
+                  aria-label="Refresh weather"
+                  className="ml-2 inline-flex cursor-pointer align-middle disabled:cursor-wait disabled:opacity-40"
+                  disabled={!coordinates || isFetching}
+                  onClick={() => refetch()}
+                  title="Refresh weather"
+                  type="button"
+                >
+                  <RefreshCw className={isFetching ? 'animate-spin' : ''} size={16} />
+                </button>
               </h4>
               <h4 className='text-xl text-center'>
                 {getMonthAndDate(weatherData.dt)}

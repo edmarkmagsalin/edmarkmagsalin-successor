@@ -95,7 +95,7 @@ export const Assistant = () => {
 		<div className="flex flex-col justify-center align-middle w-full h-full">
       <div className='text-center pb-2'>
         <h1>{("AI Assistant").toUpperCase()}</h1>
-        <small className="text-xs cursor-pointer"><a onClick={handleClearMessages}>Clear Messages</a></small> | <small className='text-xs cursor-pointer'><a onClick={() => dialogRef.current?.showModal()}>About</a>
+        <small className={`text-center cursor-pointer ${messages.length == 0 && 'opacity-30'}`}><a onClick={handleClearMessages}>Clear Messages</a></small> | <small className='text-xs cursor-pointer'><a onClick={() => dialogRef.current?.showModal()}>About</a>
         </small>
       </div>
       
