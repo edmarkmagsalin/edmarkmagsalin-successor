@@ -1,14 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { FormEvent, KeyboardEvent, ReactNode } from 'react'
 import { Send } from 'lucide-react'
 import { useSendMessageMutation } from '@/services/assistantApi'
 import { ExternalLink } from '@/components'
-
-type ChatMessage = {
-	id: number;
-	role: 'user' | 'assistant';
-	content: string;
-};
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { addMessage, clearMessages } from './assistantSlice'
 
 const LINK_PATTERN = /\[([^\]]+)\]\(((?:https?:\/\/|mailto:)[^\s)]+)\)|((?:https?:\/\/|mailto:)[^\s]+)/g
 
@@ -39,11 +35,11 @@ const renderMessageContent = (content: string): ReactNode[] => {
 }
 
 export const Assistant = () => {
+  const dispatch = useAppDispatch()
 	const [message, setMessage] = useState('')
-	const [messages, setMessages] = useState<ChatMessage[]>([])
+  const messages = useAppSelector((state) => state.assistant.messages)
 	const [errorMessage, setErrorMessage] = useState<string | null>(null)
 	const [sendMessage, { isLoading }] = useSendMessageMutation()
-	const nextMessageId = useRef(0)
   const [isSlowLoading, setIsSlowLoading] = useState(false)
 
   useEffect(() => {
@@ -59,15 +55,6 @@ export const Assistant = () => {
     return () => window.clearTimeout(slowLoadingTimer)
   }, [isLoading])
 
-	const addMessage = (role: ChatMessage['role'], content: string) => {
-		const nextMessage = {
-			id: nextMessageId.current++,
-			role,
-			content,
-		}
-		setMessages((currentMessages) => [...currentMessages, nextMessage])
-	}
-
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 		const trimmedMessage = message.trim()
@@ -78,15 +65,20 @@ export const Assistant = () => {
 
 		setMessage('')
 		setErrorMessage(null)
-		addMessage('user', trimmedMessage)
+    dispatch(addMessage({ role: 'user', content: trimmedMessage }))
 
 		try {
 			const response = await sendMessage({ message: trimmedMessage }).unwrap()
-			addMessage('assistant', response.answer)
+      dispatch(addMessage({ role: 'assistant', content: response.answer }))
 		} catch {
 			setErrorMessage('The assistant could not respond. Please try again.')
 		}
 	}
+
+  const handleClearMessages = () => {
+    dispatch(clearMessages())
+    setErrorMessage(null)
+  }
 
   const handleMessageKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -99,9 +91,12 @@ export const Assistant = () => {
 		<div className="flex flex-col justify-center align-middle w-full h-full">
       <div className='text-center pb-2'>
         <h1>{("AI Assistant").toUpperCase()}</h1>
+        <button aria-label="Clear messages" onClick={handleClearMessages} title="Clear messages" type="button">
+          Clear messages
+        </button>
       </div>
       
-      <div className="flex flex-col justify-center w-full h-full mb-15 text-center shadow-2xl rounded-xl p-4 chat-box">
+      <div className="flex flex-col justify-center w-full h-full mb-10 px-4">
         <div className="flex-1 max-h-50 space-y-3 px-4 pb-4 overflow-y-scroll" aria-live="polite">
           {messages.length === 0 && (
             <div className="h-full flex items-center justify-center text-center opacity-50">
@@ -113,7 +108,7 @@ export const Assistant = () => {
               className={`flex ${chatMessage.role === 'user' ? 'justify-end' : 'justify-start'} text-left`}
               key={chatMessage.id}
             >
-              <p className={`max-w-[85%] rounded-xl px-3 py-2 shadow-2xl ${chatMessage.role === 'user' ? 'bg-black/20' : 'bg-white/20'}`}>
+              <p className={`max-w-[85%] rounded-xl px-3 py-2 ${chatMessage.role === 'user' ? 'bg-black/20' : 'bg-white/20'}`}>
                 {renderMessageContent(chatMessage.content)}
               </p>
             </div>
@@ -121,7 +116,7 @@ export const Assistant = () => {
           {isLoading && (
             <p className="text-left opacity-60">
               {isSlowLoading
-                ? 'Apologies, the API is taking longer than usual because the free service may be waking up. The next request should be faster.'
+                ? 'Waking up freemium API...'
                 : 'Thinking...'}
             </p>
           )}

@@ -1,9 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { weatherApi } from '@/services/weatherApi'
 import { assistantApi } from '@/services/assistantApi'
+import weatherReducer from '@/features/weather/weatherSlice'
+import assistantReducer from '@/features/assistant/assistantSlice'
 
 export const store = configureStore({
   reducer: {
+    weather: weatherReducer,
+    assistant: assistantReducer,
     [weatherApi.reducerPath]: weatherApi.reducer,
     [assistantApi.reducerPath]: assistantApi.reducer
   },

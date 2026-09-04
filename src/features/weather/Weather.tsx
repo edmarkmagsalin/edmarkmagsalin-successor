@@ -2,8 +2,12 @@ import { useGetDataWeatherByLatLongQuery } from '@/services/weatherApi';
 import { useEffect, useRef, useState } from 'react';
 import { MapPin } from 'lucide-react'
 import { Dialog, ExternalLink } from '@/components';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { setWeatherData } from './weatherSlice';
 
 export const Weather = () => {
+  const dispatch = useAppDispatch();
+  const cachedWeather = useAppSelector((state) => state.weather.data);
   const [coordinates, setCoordinates] = useState<{
     lat: number;
     long: number;
@@ -46,6 +50,14 @@ export const Weather = () => {
     }
   )
 
+  useEffect(() => {
+    if (data) {
+      dispatch(setWeatherData(data));
+    }
+  }, [data, dispatch]);
+
+  const weatherData = data ?? cachedWeather;
+
   const [isSlowLoading, setIsSlowLoading] = useState(false);
 
   useEffect(() => {
@@ -84,31 +96,31 @@ export const Weather = () => {
         {isLoading && (
           <small>
             {isSlowLoading
-              ? 'Apologies, the weather API is taking longer than usual because the free service may be waking up. The next request should be faster.'
+              ? 'Waking up freemium API...'
               : 'Getting weather...'}
           </small>
         )}
-        {error && <small>Error getting data.</small>}
+        {error && !weatherData && <small>Error getting data.</small>}
         {
-          data && (
+          weatherData && (
             <>
               <h4 className='text-center'><MapPin size={20} className='inline-block' />
-                {data.name}, {data.sys.country}
+                {weatherData.name}, {weatherData.sys.country}
               </h4>
               <h4 className='text-xl text-center'>
-                {getMonthAndDate(data.dt)}
+                {getMonthAndDate(weatherData.dt)}
               </h4>
               <div className="flex justify-center gap-2">
-                <img src={`https://openweathermap.org/payload/api/media/file/${data.weather[0].icon}.png`} alt={data.weather[0].description} className='w-10 h-10 inline-block rounded-full bg-gray-500'/>
+                <img src={`https://openweathermap.org/payload/api/media/file/${weatherData.weather[0].icon}.png`} alt={weatherData.weather[0].description} className='w-10 h-10 inline-block rounded-full bg-gray-500'/>
                 <small className='self-center'>
-                  {getWeatherDescription(data.weather[0].description)}
+                  {getWeatherDescription(weatherData.weather[0].description)}
                 </small>
               </div>
               <div className="text-center text-[3rem] mt-0">
-                {getTempText(data.main.temp)}
+                {getTempText(weatherData.main.temp)}
               </div>
               <div className="text-center opacity-40 text-xs">
-                Feels like {getTempText(data.main.feels_like)}
+                Feels like {getTempText(weatherData.main.feels_like)}
               </div>
             </>
           )

@@ -37,7 +37,6 @@ A simple website of a creative studio company.
  - [Link](https://aspervisual.netlify.app/)
  - [Repo](https://github.com/edmarkmagsalin/aspervisual)
 
-
 ## GitHub (User) Finder
 This application lets you search Github users using the Github API. This project is part of the course React Front To Back that is created by Brad Traversy.
 
