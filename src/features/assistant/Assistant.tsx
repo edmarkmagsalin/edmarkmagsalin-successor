@@ -8,7 +8,19 @@ import { addMessage, clearMessages } from './assistantSlice'
 
 const LINK_PATTERN = /\[([^\]]+)\]\(((?:https?:\/\/|mailto:)[^\s)]+)\)|((?:https?:\/\/|mailto:)[^\s]+)/g
 
-const getGreeting = () => new Date().getHours() < 12 ? 'Good morning! ☀️' : 'Good evening! 🌙'
+const getGreeting = () => {
+  const hour = new Date().getHours()
+
+  if (hour < 12) {
+    return 'Good morning! ☀️'
+  }
+
+  if (hour < 18) {
+    return 'Good afternoon! 🌤️'
+  }
+
+  return 'Good evening! 🌙'
+}
 
 const renderMessageContent = (content: string): ReactNode[] => {
   const renderedContent: ReactNode[] = []
@@ -93,12 +105,16 @@ export const Assistant = () => {
 
 	return (
 		<div className="flex flex-col justify-center align-middle w-full h-full">
-      <div className='text-center pb-2'>
+      <header className='text-center pb-2'>
         <h1>{("AI Assistant").toUpperCase()}</h1>
-        <small className={`text-center cursor-pointer ${messages.length == 0 && 'opacity-30'}`}><a onClick={handleClearMessages}>Clear Messages</a></small> | <small className='text-xs cursor-pointer'><a onClick={() => dialogRef.current?.showModal()}>About</a>
-        </small>
-      </div>
-      
+        <div className="mini-menu">
+          <button disabled={messages.length == 0} onClick={handleClearMessages}>
+            Clear Messages
+          </button>
+          |
+          <button onClick={() => dialogRef.current?.showModal()}>About</button>
+        </div>
+      </header>
       <div className="flex flex-col justify-center w-full h-full mb-10 px-4">
         <div className="flex-1 max-h-50 space-y-3 px-4 pb-4 overflow-y-scroll" aria-live="polite">
           {messages.length === 0 && (
@@ -119,7 +135,7 @@ export const Assistant = () => {
           {isLoading && (
             <p className="text-left opacity-60">
               {isSlowLoading
-                ? 'Waking up freemium API...'
+                ? 'Cold starting API...'
                 : 'Thinking...'}
             </p>
           )}

@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "backend:python:build": "cd backend-python && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt",
-    "backend:python:dev": "cd backend-python && .venv/bin/python -m uvicorn main:app --reload --port 8000",
-    "backend:node:dev": "cd backend-node && npm run dev",
+    "python:build": "cd backend-python && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt",
+    "python:dev": "cd backend-python && .venv/bin/python -m uvicorn main:app --reload --port 8000",
+    "node:dev": "cd backend-node && npm run dev",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview"

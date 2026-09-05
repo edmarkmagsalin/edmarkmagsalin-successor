@@ -1,7 +1,7 @@
 import { useGetDataWeatherByLatLongQuery } from '@/services/weatherApi';
 import { useEffect, useRef, useState } from 'react';
 import { MapPin, RefreshCw } from 'lucide-react'
-import { Dialog, ExternalLink } from '@/components';
+import { Dialog, ExternalLink, Loading } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { setWeatherData } from './weatherSlice';
 
@@ -88,36 +88,41 @@ export const Weather = () => {
 
   return (
     <div className="flex flex-col justify-center align-middle w-full h-full">
-      <div className='text-center pb-2'>
-        <h1>{("Current City Weather").toUpperCase()}</h1>
-        <small className='text-xs cursor-pointer'><a onClick={() => dialogRef.current?.showModal()}>About</a>
-        </small>
-      </div>
+      <header className='text-center pb-2'>
+        <h1>{("Weather Today").toUpperCase()}</h1>
+        <div className="mini-menu">
+          <button onClick={() => dialogRef.current?.showModal()}>
+            About
+          </button>
+        </div>
+      </header>
       <div className="flex flex-col justify-center w-full h-full mb-10 text-center">
         {!coordinates && <small>Getting location permission..</small>}
         {isLoading && (
           <small>
-            {isSlowLoading
-              ? 'Waking up freemium API...'
-              : 'Getting weather...'}
+            {
+              isSlowLoading
+                ? <Loading text='Cold starting API...' />
+                : <Loading text='Loading weather data...' />
+            }
           </small>
         )}
         {error && !weatherData && <small>Error getting data.</small>}
         {
           weatherData && (
             <>
-              <h4 className='text-center'>
-                <MapPin size={20} className='inline-block' />
+              <h4 className='flex justify-center items-center gap-1'>
+                <MapPin className='inline-block' />
                 {weatherData.name}, {weatherData.sys.country}
                 <button
                   aria-label="Refresh weather"
-                  className="ml-2 inline-flex cursor-pointer align-middle disabled:cursor-wait disabled:opacity-40"
+                  className="cursor-pointer disabled:cursor-wait"
                   disabled={!coordinates || isFetching}
                   onClick={() => refetch()}
                   title="Refresh weather"
                   type="button"
                 >
-                  <RefreshCw className={isFetching ? 'animate-spin' : ''} size={16} />
+                  <RefreshCw className={isFetching ? 'animate-spin' : ''} size={15} />
                 </button>
               </h4>
               <h4 className='text-xl text-center'>

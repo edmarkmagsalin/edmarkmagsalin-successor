@@ -8,7 +8,7 @@ export type Board = Cell[][];
 
 export interface TicTacToeState {
   turn: Player;
-  winner: Player | 'DRAW' | null;
+  winner: Player | null;
   turnLog: string[];
   tableData: Board;
 }
@@ -74,7 +74,7 @@ const getPersistedState = (): TicTacToeState => {
 const isEqual = (first: string, second: string, third: string) =>
   first !== '' && first === second && second === third;
 
-const getWinner = (board: Board): Player | 'DRAW' | null => {
+const getWinner = (board: Board): Player | null => {
   const entries = board.flat().map((cell) => cell.value);
   const winningLines = [
     [0, 1, 2],
@@ -95,7 +95,7 @@ const getWinner = (board: Board): Player | 'DRAW' | null => {
     return entries[winningLine[0]] as Player;
   }
 
-  return entries.every((entry) => entry !== '') ? 'DRAW' : null;
+  return null; // Draw or game is still ongoing, no winner yet
 };
 
 const persistState = (state: TicTacToeState) => {

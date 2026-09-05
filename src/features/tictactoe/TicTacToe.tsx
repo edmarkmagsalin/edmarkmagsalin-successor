@@ -16,13 +16,18 @@ export const TicTacToe = () => {
   };
   return (
     <div className="flex flex-col justify-center align-middle w-full h-full">
-      <div className='text-center pb-2'>
+      <header className='text-center pb-2'>
         <h1>{("Tic Tac Toe").toUpperCase()}</h1>
-        <small className={`text-center cursor-pointer ${turnLog.length == 0 && 'opacity-30'}`}>
-          <a onClick={() => turnLog.length ? dispatch(resetGame()) : undefined}>Reset</a>
-        </small> | <small className='text-xs cursor-pointer'><a onClick={() => dialogRef.current?.showModal()}>About</a>
-        </small>
-      </div>
+        <div className="mini-menu">
+          <button disabled={turnLog.length == 0} onClick={() => turnLog.length ? dispatch(resetGame()) : undefined}>
+            Reset
+          </button>
+          |
+          <button onClick={() => dialogRef.current?.showModal()}>
+            About
+          </button>
+        </div>
+      </header>
       <div className="flex flex-col justify-center w-full h-full mb-10 text-center">
         <h4>
           {
