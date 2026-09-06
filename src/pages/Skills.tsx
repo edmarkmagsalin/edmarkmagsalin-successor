@@ -17,6 +17,7 @@ export const Skills = () => {
       skills: [
         'AWS',
         'Node.js',
+        'Python',
         'Express',
         'PHP',
       ],
@@ -25,6 +26,8 @@ export const Skills = () => {
       heading: 'AI',
       skills: [
         'Claude',
+        'Groq',
+        'GitHub Copilot',
       ],
     },
   ]
@@ -39,7 +42,7 @@ export const Skills = () => {
                 {
                   config.skills.map((skill, index) => {
                     return (
-                      <li key={index} className='pills py-1 px-3'>{skill}</li>
+                      <li key={index} className='pills backdrop-bg py-1 px-3'>{skill}</li>
                     )
                   })
                 }

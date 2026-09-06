@@ -36,7 +36,7 @@ export const Projects = () => {
                 {
                   config.madeUsing.map((item, index) => {
                     return (
-                      <li key={index} className='pills py-1 px-1.5 text-xs'>{item}</li>
+                      <li key={index} className='pills backdrop-bg py-1 px-1.5 text-xs'>{item}</li>
                     )
                   })
                 }

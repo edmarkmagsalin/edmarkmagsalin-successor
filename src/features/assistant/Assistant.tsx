@@ -57,6 +57,7 @@ export const Assistant = () => {
   const [isSlowLoading, setIsSlowLoading] = useState(false)
 
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!isLoading) {
@@ -70,6 +71,14 @@ export const Assistant = () => {
 
     return () => window.clearTimeout(slowLoadingTimer)
   }, [isLoading])
+
+  useEffect(() => {
+    const chatContainer = chatContainerRef.current
+
+    if (chatContainer) {
+      chatContainer.scrollTop = chatContainer.scrollHeight
+    }
+  }, [messages.length, isLoading, errorMessage])
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
@@ -116,7 +125,11 @@ export const Assistant = () => {
         </div>
       </header>
       <div className="flex flex-col justify-center w-full h-full mb-10 px-4">
-        <div className="flex-1 max-h-50 space-y-3 px-4 pb-4 overflow-y-scroll" aria-live="polite">
+        <div
+          className="flex-1 max-h-50 space-y-3 px-4 pb-4 overflow-y-scroll"
+          aria-live="polite"
+          ref={chatContainerRef}
+        >
           {messages.length === 0 && (
             <div className="h-full flex items-center justify-center text-center opacity-50">
               <p className="self-center text-center">{getGreeting()}</p>
@@ -148,7 +161,7 @@ export const Assistant = () => {
             id="assistant-message"
       			onKeyDown={handleMessageKeyDown}
             onChange={(event) => setMessage(event.target.value)}
-            placeholder="Ask a question about Edmark..."
+            placeholder="Ask questions about Edmark..."
             rows={1}
             value={message}
           />
@@ -169,10 +182,10 @@ export const Assistant = () => {
           <h4 className='pb-2'>Created with</h4>
           <ul className='flex flex-wrap gap-1 justify-center'>
             <li>
-              <ExternalLink className='pills py-2 px-3 text-sm' href='https://groq.com/' text='Groq' />
+              <ExternalLink className='backdrop-bg-pills py-2 px-3 text-sm' href='https://groq.com/' text='Groq' />
             </li>
             <li>
-              <ExternalLink className='pills py-2 px-3 text-sm' href='https://www.python.org/' text='Python' />
+              <ExternalLink className='backdrop-bg-pills py-2 px-3 text-sm' href='https://www.python.org/' text='Python' />
             </li>
           </ul>
         </div>

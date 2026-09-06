@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 
 const CAROUSEL_STORAGE_KEY = 'web-apps-carousel-slide'
 
-export const WebApps = () => {
+export const Apps = () => {
   const carouselRef = useRef<HTMLUListElement>(null)
 
   useEffect(() => {
@@ -41,8 +41,8 @@ export const WebApps = () => {
   }, [])
 
   return(
-    <div className='page-container max-w-200 bg-white/20 backdrop-blur-xl rounded-xl'>
-       <ul className='carousel scrollbar-none' ref={carouselRef}>
+    <div className='page-container backdrop-bg max-w-200 rounded-xl scrollbar-none'>
+       <ul className='carousel' ref={carouselRef}>
           <li>
             <Assistant />
           </li>
@@ -53,8 +53,9 @@ export const WebApps = () => {
             <TicTacToe />
           </li>
           <li>
-            <div className="flex flex-col justify-center text-center h-full">
-              <small>Currently brewing apps. Stand by for more.</small>
+            <div className="flex flex-col items-center justify-center text-center h-full">
+              <h1>☕️</h1>
+              <small>Stand by for more apps.</small>
             </div>
           </li>
        </ul>

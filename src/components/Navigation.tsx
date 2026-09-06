@@ -29,8 +29,8 @@ const navigationConfig = [
     icon: <Laptop />
   },
   {
-    path: '/webapps',
-    LinkText: 'Web Apps',
+    path: '/apps',
+    LinkText: 'Apps',
     icon: <LayoutGrid />
   },
 ]

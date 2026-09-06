@@ -19,7 +19,7 @@ export const TicTacToe = () => {
       <header className='text-center pb-2'>
         <h1>{("Tic Tac Toe").toUpperCase()}</h1>
         <div className="mini-menu">
-          <button disabled={turnLog.length == 0} onClick={() => turnLog.length ? dispatch(resetGame()) : undefined}>
+          <button disabled={turnLog.length == 0} onClick={() => dispatch(resetGame())}>
             Reset
           </button>
           |
@@ -29,7 +29,7 @@ export const TicTacToe = () => {
         </div>
       </header>
       <div className="flex flex-col justify-center w-full h-full mb-10 text-center">
-        <h4>
+        <h4 className='pb-2'>
           {
             winner
               ? (<>Player <strong>{winner}</strong> is the winner 🏆</>)
@@ -37,7 +37,7 @@ export const TicTacToe = () => {
               : (<><strong>{turn}</strong>'s turn</>)
           }
         </h4>
-        <table className={`tictactoe ${winner ? 'opacity-30' : 'opacity-100'}`}>
+        <table className={`tictactoe ${(winner || turnLog.length == 9) ? 'opacity-30' : 'opacity-100'}`}>
           <tbody>
             {
               tableData.map((row, index) => {
@@ -64,7 +64,7 @@ export const TicTacToe = () => {
           <h4 className='pb-2'>Created with</h4>
           <ul className='flex flex-wrap gap-1 justify-center'>
             <li>
-              <ExternalLink className='pills py-2 px-3 text-sm' href='https://react.dev/reference/react/useState' text='useState Hook' />
+              <ExternalLink className='backdrop-bg-pills py-2 px-3 text-sm' href='https://react.dev/reference/react/useState' text='useState Hook' />
             </li>
           </ul>
         </div>

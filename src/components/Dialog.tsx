@@ -14,7 +14,7 @@ export const Dialog = ({ children, dialogRef }: { children: React.ReactNode; dia
           dialogRef.current?.close()
         }
       }}
-      className='fixed top-1/2 left-1/2 min-h-40 -translate-x-1/2 -translate-y-1/2 rounded-lg backdrop-blur-lg bg-white/20 p-8'
+      className='backdrop-bg fixed top-1/2 left-1/2 min-h-40 -translate-x-1/2 -translate-y-1/2 rounded-lg p-8 shadow-xl'
     >
       {children}
     </dialog>

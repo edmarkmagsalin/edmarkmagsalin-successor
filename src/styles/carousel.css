@@ -7,34 +7,54 @@ ul.carousel {
 
   overflow-y: hidden;
   overflow-x: scroll;
+  scrollbar-width: none;
   scroll-snap-type: x mandatory;
-  
-  /* Animates the slide movement on marker click */
   scroll-behavior: smooth; 
 
   anchor-name: --my-carousel;
+  & > li {
+    list-style-type: none;
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    padding: 20px;
+  }
 
+  /* Scroll Marker : BEGIN */
   @supports (scroll-marker-group: after) {
     scroll-marker-group: after;
   }
-
-
   &::scroll-marker-group {
     position: absolute;
     position-anchor: --my-carousel;
-    top: calc(anchor(bottom) - 50px);
+    bottom: calc(anchor(bottom) + 25px);
     justify-self: anchor-center;
-
     display: flex;
     justify-content: center;
     gap: 10px;
   }
+  & > li::scroll-marker {
+    content: attr(data-item);
+    width: 10px;
+    height: 10px;
+    background-color: var(--text-color);
+    opacity: 0.5;
+    border-radius: 50%;
+    overflow: hidden;
+    text-indent: 16px;
+  }
+  & > li::scroll-marker:target-current,
+  & > li::scroll-marker:hover {
+    opacity: 1;
+  }
+  /* Scroll Marker : END */
+
+  /* Scroll Buttons : BEGIN */
   &::scroll-button(*) {
     border: 0;
     font-size: 1rem;
     background: none;
-    color: var(--color-gray-500);
-    opacity: 0.7;
+    color: var(--text-color);
+    opacity: 0.5;
     cursor: pointer;
     position: absolute;
     position-anchor: --my-carousel;
@@ -44,42 +64,19 @@ ul.carousel {
   &::scroll-button(*):focus {
     opacity: 1;
   }
-
-  &::scroll-button(*):active {
-    translate: 1px 1px;
-  }
   &::scroll-button(*):disabled {
-    opacity: 0;
+    opacity: 0.5;
     cursor: unset;
   }
   &::scroll-button(left) {
     content: "◄" / "Previous";
     right: calc(anchor(left) - 70px);
-    bottom: calc(anchor(bottom) + 30px);
+    bottom: calc(anchor(bottom) + 20px);
   }
   &::scroll-button(right) {
     content: "►" / "Next";
     left: calc(anchor(right) - 70px);
-    bottom: calc(anchor(bottom) + 30px);
+    bottom: calc(anchor(bottom) + 20px);
   }
-  & > li {
-    list-style-type: none;
-    flex: 0 0 100%;
-    scroll-snap-align: center;
-    padding: 20px;
-  }
-
-  & > li::scroll-marker {
-    content: attr(data-item);
-    width: 10px;
-    height: 10px;
-    background-color: transparent;
-    border: 1px solid var(--color-gray-500);
-    border-radius: 50%;
-    overflow: hidden;
-    text-indent: 16px;
-  }
-  & > li::scroll-marker:target-current {
-    background-color: var(--color-gray-500);
-  }
+  /* Scroll Buttons : END */
 }

@@ -1,48 +1,39 @@
-@utility dark-theme-background {
-  background:
-  rgba(41, 41, 41, 1)
-    radial-gradient(circle,rgba(0, 0, 0, 1) 0%, rgba(41, 41, 41, 1) 100%)
-    center / cover
-    no-repeat
-    fixed;
-  color: #F4F4F5;
-  transition: color .4s;
-}
+/* Light mode sttings */
+:root {
+  /* Dark mode 🌙 */ 
+  --dark-text-color: #F4F4F5;
+  --dark-bg-color: rgba(41, 41, 41, 1);
+  --dark-bg-secondary-color: rgba(0, 0, 0, 1);
 
-@utility light-theme-background {
-  background: 
-    rgba(84, 84, 84, 1)
-    radial-gradient(circle,rgba(255, 255, 255, 1) 0%, rgba(84, 84, 84, 1) 100%)
-    center / cover
-    no-repeat
-    fixed;
-  color: #141414;
-  transition: color .4s;
-}
-a {
-  @apply opacity-60;
-  &:hover {
-    @apply opacity-100;
-  }
-  &.active {
-    @apply opacity-100;
-  }
-}
+  /* Light mode ☀️ */
+  --light-text-color: #141414;
+  --light-bg-color: rgba(84, 84, 84, 1);
+  --light-bg-secondary-color: rgba(255, 255, 255, 1);
 
-html[data-theme='dark'] {
-  @apply dark-theme-background;
+  /* Default (Light mode) */
+  --text-color: var(--light-text-color);
+  --bg-color: var(--light-bg-color);
+  --bg-secondary-color: var(--light-bg-secondary-color);
 }
-
-html[data-theme='light'] {
-  @apply light-theme-background;
-}
-
 @media (prefers-color-scheme: dark) {
-  html {
-    @apply dark-theme-background;
+  /* Machine (Dark mode) */
+  :root {
+    --text-color: var(--dark-text-color);
+    --bg-color: var(--dark-bg-color);
+    --bg-secondary-color: var(--dark-bg-secondary-color);
   }
+}
 
-  html[data-theme='light'] {
-    @apply light-theme-background;
-  }
+/* Override (Dark mode) */
+html[data-theme='dark'] {
+  --text-color: var(--dark-text-color);
+  --bg-color: var(--dark-bg-color);
+  --bg-secondary-color: var(--dark-bg-secondary-color);
+}
+
+/* Override (Light mode) */
+html[data-theme='light'] {
+  --text-color: var(--light-text-color);
+  --bg-color: var(--light-bg-color);
+  --bg-secondary-color: var(--light-bg-secondary-color);
 }

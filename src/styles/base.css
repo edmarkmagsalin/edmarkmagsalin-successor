@@ -2,10 +2,28 @@
   @apply scrollbar-track-transparent scrollbar-thumb-white/20
 }
 
+html {
+  color: var(--text-color);
+  background: var(--bg-color)
+    radial-gradient(circle,var(--bg-secondary-color) 0%, var(--bg-color) 100%)
+    center / cover
+    no-repeat
+    fixed;
+  transition: color .4s;
+}
 body {
   font-size: 16px;
   user-select: none;
   overflow: hidden;
+}
+a {
+  @apply opacity-60;
+  &:hover {
+    @apply opacity-100;
+  }
+  &.active {
+    @apply opacity-100;
+  }
 }
 button {
   cursor: pointer;
@@ -53,7 +71,7 @@ dialog {
   color: inherit;
   width: 600px;
   &::backdrop {
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(1px);
   }
 }
 

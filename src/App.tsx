@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router"
 import { ThemeToggle, Navigation } from '@/components'
-import { Me, WebApps, Skills, Projects, Devices } from '@/pages'
+import { Me, Apps, Skills, Projects, Devices } from '@/pages'
 
 function App() {
   return (
@@ -12,16 +12,16 @@ function App() {
             <Route path='/skills' element={<Skills />} />
             <Route path='/projects' element={<Projects />} />
             <Route path='/devices' element={<Devices />} />
-            <Route path='/webapps' element={<WebApps />} />
+            <Route path='/apps' element={<Apps />} />
           </Routes>
         </div>
 
         <div className="fixed bottom-5 left-1/2 min-h-10 -translate-x-1/2 -translate-y-1 gap-4 justify-center items-bottom">
           <div className="flex gap-4">
-            <div className="glass-pills">
+            <div className="control-center backdrop-bg">
               <Navigation />
             </div>
-            <div className="glass-pills">
+            <div className="control-center backdrop-bg">
               <ThemeToggle />
             </div>
           </div>

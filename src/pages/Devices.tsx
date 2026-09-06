@@ -5,8 +5,11 @@ export const Devices = () => {
       description: '13-inch, M1, 2020',
     },
     {
+      name: 'Magic Mouse',
+      description: 'White Multi-Touch Surface',
+    },
+    {
       name: 'iPhone 17 Pro Max',
-      description: '256GB Silver',
     },
   ]
   return (
@@ -16,7 +19,7 @@ export const Devices = () => {
           return (
             <div key={index} className='flex flex-col'>
               <h2>{config.name}</h2>
-              <small>{config.description}</small>
+              {config.description && <small>{config.description}</small>}
             </div>
           )
         })

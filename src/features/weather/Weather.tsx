@@ -109,7 +109,7 @@ export const Weather = () => {
         )}
         {error && !weatherData && <small>Error getting data.</small>}
         {
-          weatherData && (
+          (weatherData && !isLoading && !error) && (
             <>
               <h4 className='flex justify-center items-center gap-1'>
                 <MapPin className='inline-block' />
@@ -149,13 +149,13 @@ export const Weather = () => {
           <h4 className='pb-2'>Created with</h4>
           <ul className='flex flex-wrap gap-1 justify-center'>
             <li>
-              <ExternalLink className='pills py-2 px-3 text-sm' href='https://openweathermap.org/api' text='OpenWeather API' />
+              <ExternalLink className='backdrop-bg-pills py-2 px-3 text-sm' href='https://openweathermap.org/api' text='OpenWeather API' />
             </li>
             <li>
-              <ExternalLink className='pills py-2 px-3 text-sm' href='https://expressjs.com/' text='ExpressJS' />
+              <ExternalLink className='backdrop-bg-pills py-2 px-3 text-sm' href='https://expressjs.com/' text='ExpressJS' />
             </li>
             <li>
-              <ExternalLink className='pills py-2 px-3 text-sm' href='https://redux-toolkit.js.org/rtk-query/overview' text='RTK Query' />
+              <ExternalLink className='backdrop-bg-pills py-2 px-3 text-sm' href='https://redux-toolkit.js.org/rtk-query/overview' text='RTK Query' />
             </li>
           </ul>
         </div>
