@@ -6,8 +6,6 @@ import { Dialog, ExternalLink } from '@/components'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { addMessage, clearMessages } from './assistantSlice'
 
-const LINK_PATTERN = /\[([^\]]+)\]\(((?:https?:\/\/|mailto:)[^\s)]+)\)|((?:https?:\/\/|mailto:)[^\s]+)/g
-
 const getGreeting = () => {
   const hour = new Date().getHours()
 
@@ -22,23 +20,35 @@ const getGreeting = () => {
   return 'Good evening! 🌙'
 }
 
+const BOLD_PATTERN = /\*\*[^*]+\*\*/g
+const LINK_PATTERN = /\[([^\]]+)\]\(((?:https?:\/\/|mailto:)[^\s)]+)\)|((?:https?:\/\/|mailto:)[^\s]+)/g
+const MESSAGE_TOKEN_PATTERN = new RegExp(`(${BOLD_PATTERN.source}|${LINK_PATTERN.source})`, 'g')
 const renderMessageContent = (content: string): ReactNode[] => {
   const renderedContent: ReactNode[] = []
   let lastIndex = 0
 
-  for (const match of content.matchAll(LINK_PATTERN)) {
+  for (const match of content.matchAll(MESSAGE_TOKEN_PATTERN)) {
     const matchIndex = match.index ?? 0
-    const linkText = match[1] ?? match[3]
-    const linkUrl = match[2] ?? match[3]
+    const matchedText = match[0]
 
     if (matchIndex > lastIndex) {
       renderedContent.push(content.slice(lastIndex, matchIndex))
     }
 
-    renderedContent.push(
-      <ExternalLink href={linkUrl} text={linkText} key={`${linkUrl}-${matchIndex}`} />
-    )
-    lastIndex = matchIndex + match[0].length
+    if (matchedText.startsWith('**') && matchedText.endsWith('**')) {
+      renderedContent.push(
+        <strong key={`${matchedText}-${matchIndex}`}>{matchedText.slice(2, -2)}</strong>
+      )
+    } else {
+      const linkText = match[1] ?? match[3]
+      const linkUrl = match[2] ?? match[3]
+
+      renderedContent.push(
+        <ExternalLink href={linkUrl} text={linkText} key={`${linkUrl}-${matchIndex}`} />
+      )
+    }
+
+    lastIndex = matchIndex + matchedText.length
   }
 
   if (lastIndex < content.length) {
@@ -124,9 +134,9 @@ export const Assistant = () => {
           <button onClick={() => dialogRef.current?.showModal()}>About</button>
         </div>
       </header>
-      <div className="flex flex-col justify-center w-full h-full mb-10 px-4">
+      <div className="chat-box-container">
         <div
-          className="flex-1 max-h-50 space-y-3 px-4 pb-4 overflow-y-scroll"
+          className="chat-box"
           aria-live="polite"
           ref={chatContainerRef}
         >
@@ -137,10 +147,10 @@ export const Assistant = () => {
           )}
           {messages.map((chatMessage) => (
             <div
-              className={`flex ${chatMessage.role === 'user' ? 'justify-end' : 'justify-start'} text-left`}
+              className={`message-container flex ${chatMessage.role === 'user' ? 'justify-end' : 'justify-start'} text-left`}
               key={chatMessage.id}
             >
-              <p className={`max-w-[85%] rounded-xl px-3 py-2 ${chatMessage.role === 'user' ? 'bg-black/20' : 'bg-white/20'}`}>
+              <p className={`message ${chatMessage.role === 'user' ? 'bg-black/20' : 'bg-white/20'}`}>
                 {renderMessageContent(chatMessage.content)}
               </p>
             </div>

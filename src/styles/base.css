@@ -85,3 +85,20 @@ table.tictactoe {
 .mini-menu {
   @apply flex justify-center gap-2 items-center text-xs;
 }
+.chat-box-container {
+  @apply flex flex-col justify-center w-full h-full mb-10 px-4;
+  & .chat-box {
+    @apply flex-1 max-h-50 space-y-3 px-4 pb-4 overflow-y-scroll;
+    & .message-container {
+      & p.message {
+        @apply whitespace-break-spaces rounded-xl px-3 py-2 max-w-[85%];
+        word-break: normal;
+        overflow-wrap: anywhere;
+        & a {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  
+}
