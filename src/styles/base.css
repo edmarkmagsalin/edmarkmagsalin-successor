@@ -92,7 +92,6 @@ table.tictactoe {
     & .message-container {
       & p.message {
         @apply whitespace-break-spaces rounded-xl px-3 py-2 max-w-[85%];
-        word-break: normal;
         overflow-wrap: anywhere;
         & a {
           cursor: pointer;
