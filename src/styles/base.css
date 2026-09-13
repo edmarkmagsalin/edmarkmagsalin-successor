@@ -6,15 +6,15 @@ html {
   color: var(--text-color);
   background: var(--bg-color)
     radial-gradient(circle,var(--bg-secondary-color) 0%, var(--bg-color) 100%)
-    center / cover
     no-repeat
+    center center
     fixed;
   transition: color .4s;
+  background-size: cover;
 }
 body {
   font-size: 16px;
   user-select: none;
-  overflow: hidden;
 }
 a {
   @apply opacity-60;
@@ -69,35 +69,8 @@ p {
 dialog {
   user-select: none;
   color: inherit;
-  width: 600px;
+  width: 700px;
   &::backdrop {
     backdrop-filter: blur(1px);
   }
-}
-
-table.tictactoe {
-  @apply self-center w-60 h-60 mb-10;
-  & tr td {
-    @apply border w-20 h-20 text-center text-3xl cursor-pointer;
-  }
-}
-
-.mini-menu {
-  @apply flex justify-center gap-2 items-center text-xs;
-}
-.chat-box-container {
-  @apply flex flex-col justify-center w-full h-full mb-10 px-4;
-  & .chat-box {
-    @apply flex-1 max-h-50 space-y-3 px-4 pb-4 overflow-y-scroll;
-    & .message-container {
-      & p.message {
-        @apply whitespace-break-spaces rounded-xl px-3 py-2 max-w-[85%];
-        overflow-wrap: anywhere;
-        & a {
-          cursor: pointer;
-        }
-      }
-    }
-  }
-  
 }

@@ -87,16 +87,16 @@ export const Weather = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center align-middle w-full h-full">
+    <div className="app-container">
       <header className='text-center pb-2'>
         <h1>{("Weather Today").toUpperCase()}</h1>
-        <div className="mini-menu">
+        <nav className="mini-menu">
           <button onClick={() => dialogRef.current?.showModal()}>
             About
           </button>
-        </div>
+        </nav>
       </header>
-      <div className="flex flex-col justify-center w-full h-full mb-10 text-center">
+      <main className='flex flex-col justify-center w-full h-full mb-10 items-center text-center'>
         {!coordinates && <small>Getting location permission..</small>}
         {isLoading && (
           <small>
@@ -143,7 +143,7 @@ export const Weather = () => {
             </>
           )
         }
-      </div>
+      </main>
       <Dialog dialogRef={dialogRef}>
         <div className='text-center'>
           <h4 className='pb-2'>Created with</h4>

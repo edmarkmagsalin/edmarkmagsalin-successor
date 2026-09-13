@@ -15,5 +15,17 @@
 }
 
 @utility page-container {
-  @apply flex flex-col gap-8 h-120 w-full max-w-150 overflow-scroll
+  @apply flex flex-col gap-8 max-h-[calc(100dvh-150px)] h-full w-full max-w-150 overflow-auto rounded-lg p-4;
+}
+@utility app-container{
+    @apply flex flex-col w-full h-full min-h-100;
+    & header {
+      @apply min-h-10;
+    }
+    & main {
+      @apply w-full h-full;
+    }
+  }
+.mini-menu {
+  @apply flex justify-center gap-2 items-center text-xs;
 }

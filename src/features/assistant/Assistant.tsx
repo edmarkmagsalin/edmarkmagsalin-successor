@@ -123,69 +123,72 @@ export const Assistant = () => {
   }
 
 	return (
-		<div className="flex flex-col justify-center align-middle w-full h-full">
+		<div className="app-container">
       <header className='text-center pb-2'>
         <h1>{("AI Assistant").toUpperCase()}</h1>
-        <div className="mini-menu">
+        <nav className="mini-menu">
           <button disabled={messages.length == 0} onClick={handleClearMessages}>
             Clear Messages
           </button>
           |
           <button onClick={() => dialogRef.current?.showModal()}>About</button>
-        </div>
+        </nav>
       </header>
-      <div className="chat-box-container">
-        <div
-          className="chat-box"
-          aria-live="polite"
-          ref={chatContainerRef}
-        >
-          {messages.length === 0 && (
-            <div className="h-full flex items-center justify-center text-center opacity-50">
-              <p className="self-center text-center">{getGreeting()}</p>
-            </div>
-          )}
-          {messages.map((chatMessage) => (
-            <div
-              className={`message-container flex ${chatMessage.role === 'user' ? 'justify-end' : 'justify-start'} text-left`}
-              key={chatMessage.id}
-            >
-              <p className={`message ${chatMessage.role === 'user' ? 'bg-black/20' : 'bg-white/20'}`}>
-                {renderMessageContent(chatMessage.content)}
-              </p>
-            </div>
-          ))}
-          {isLoading && (
-            <p className="text-left opacity-60">
-              {isSlowLoading
-                ? 'Cold starting API...'
-                : 'Thinking...'}
+      <main>
+        <div className="chat-box-container">
+          {messages.length === 0 ? (
+            <p className="greetings">
+              {getGreeting()}
             </p>
+          ) : (
+            <div
+              className="chat-box"
+              aria-live="polite"
+              ref={chatContainerRef}
+            >
+              {messages.map((chatMessage) => (
+                <div
+                  className={`message-container flex ${chatMessage.role === 'user' ? 'justify-end' : 'justify-start'} text-left`}
+                  key={chatMessage.id}
+                >
+                  <p className={`message ${chatMessage.role === 'user' ? 'bg-black/20' : 'bg-white/20'}`}>
+                    {renderMessageContent(chatMessage.content)}
+                  </p>
+                </div>
+              ))}
+              {isLoading && (
+                <p className="text-left opacity-60">
+                  {isSlowLoading
+                    ? 'Cold starting API...'
+                    : 'Thinking...'}
+                </p>
+              )}
+              {errorMessage && <p className="text-center text-red-700">{errorMessage}</p>}
+            </div>
           )}
-          {errorMessage && <p className="text-center text-red-700">{errorMessage}</p>}
-        </div>
 
-        <form className="flex items-end gap-2" onSubmit={handleSubmit}>
-          <textarea
-            className="min-h-1 flex-1 resize-none rounded-xl bg-white/25 px-3 py-2 outline-none placeholder:opacity-50"
-            id="assistant-message"
-      			onKeyDown={handleMessageKeyDown}
-            onChange={(event) => setMessage(event.target.value)}
-            placeholder="Ask questions about Edmark..."
-            rows={1}
-            value={message}
-          />
-          <button
-            aria-label="Send message"
-            className="rounded-full bg-black/15 p-3 disabled:opacity-40 cursor-pointer"
-            disabled={isLoading || !message.trim()}
-            title="Send message"
-            type="submit"
-          >
-            <Send size={15} />
-          </button>
-        </form>
-      </div>
+          <form onSubmit={handleSubmit}>
+            <textarea
+              className="min-h-1 flex-1 resize-none rounded-xl bg-white/25 px-3 py-2 outline-none placeholder:opacity-50"
+              id="assistant-message"
+              onKeyDown={handleMessageKeyDown}
+              onChange={(event) => setMessage(event.target.value)}
+              placeholder="Ask questions about Edmark..."
+              rows={1}
+              value={message}
+            />
+            <button
+              aria-label="Send message"
+              className="rounded-full bg-black/15 p-3 disabled:opacity-40 cursor-pointer"
+              disabled={isLoading || !message.trim()}
+              title="Send message"
+              type="submit"
+            >
+              <Send size={15} />
+            </button>
+          </form>
+        </div>
+      </main>
 
       <Dialog dialogRef={dialogRef}>
         <div className='text-center'>

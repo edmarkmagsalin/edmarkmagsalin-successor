@@ -41,25 +41,23 @@ export const Apps = () => {
   }, [])
 
   return(
-    <div className='page-container backdrop-bg max-w-200 rounded-xl scrollbar-none'>
-       <ul className='carousel' ref={carouselRef}>
-          <li>
-            <Assistant />
-          </li>
-          <li>
-            <Weather />
-          </li>
-          <li>
-            <TicTacToe />
-          </li>
-          <li>
-            <div className="flex flex-col items-center justify-center text-center h-full">
-              <h1>☕️</h1>
-              <small>Stand by for more apps.</small>
-            </div>
-          </li>
-       </ul>
-    </div>
+    <ul className='carousel' ref={carouselRef}>
+      <li>
+        <Assistant />
+      </li>
+      <li>
+        <Weather />
+      </li>
+      <li>
+        <TicTacToe />
+      </li>
+      <li>
+        <div className="flex flex-col items-center justify-center text-center h-full">
+          <h1>☕️</h1>
+          <small>Stand by for more apps</small>
+        </div>
+      </li>
+    </ul>
   )
 }
 

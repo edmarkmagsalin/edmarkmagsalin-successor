@@ -13,7 +13,7 @@ export const Devices = () => {
     },
   ]
   return (
-    <div className='page-container'>
+    <>
       {
         devicesConfig.map((config, index) => {
           return (
@@ -24,7 +24,7 @@ export const Devices = () => {
           )
         })
       }
-    </div>
+    </>
   )
 }
 

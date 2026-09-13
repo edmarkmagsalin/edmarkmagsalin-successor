@@ -8,9 +8,9 @@ export const Me = () => {
   const dialogRef = useRef<HTMLDialogElement>(null)
 
   return (
-    <div className='flex flex-wrap justify-center gap-4'>
+    <div className='flex flex-wrap justify-center items-center gap-4 h-65'>
       <img onClick={() => dialogRef.current?.showModal()} src={myPhoto} alt={MY_NAME} title={MY_NAME} id='myPhoto' className='cursor-pointer rounded-full' />
-      <div className='self-center'>
+      <div>
         <h1 onClick={() => dialogRef.current?.showModal()} className='cursor-pointer'>{MY_NAME}</h1>
         <p>Web developer from Philippines <sup>🇵🇭</sup></p>
         <Socials />

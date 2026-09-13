@@ -1,0 +1,23 @@
+.chat-box-container {
+  @apply flex flex-col h-[calc(100%-50px)] px-4 overflow-y-auto;
+  justify-content: flex-end;
+  & .greetings {
+    @apply h-[calc(100%-50px)] flex items-center justify-center opacity-50;
+  }
+  & .chat-box {
+    @apply space-y-3 max-h-[calc(100dvh-400px)] min-h-40 overflow-y-auto mb-4;
+    & .message-container {
+      @apply opacity-50;
+      & p.message {
+        @apply whitespace-break-spaces rounded-xl px-3 py-2 max-w-[85%];
+        overflow-wrap: anywhere;
+        & a {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  & form {
+    @apply flex gap-2;
+  }
+}

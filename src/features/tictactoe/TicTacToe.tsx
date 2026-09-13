@@ -15,10 +15,10 @@ export const TicTacToe = () => {
     }
   };
   return (
-    <div className="flex flex-col justify-center align-middle w-full h-full">
+    <div className="app-container">
       <header className='text-center pb-2'>
         <h1>{("Tic Tac Toe").toUpperCase()}</h1>
-        <div className="mini-menu">
+        <nav className="mini-menu">
           <button disabled={turnLog.length == 0} onClick={() => dispatch(resetGame())}>
             Reset
           </button>
@@ -26,9 +26,9 @@ export const TicTacToe = () => {
           <button onClick={() => dialogRef.current?.showModal()}>
             About
           </button>
-        </div>
+        </nav>
       </header>
-      <div className="flex flex-col justify-center w-full h-full mb-10 text-center">
+      <main className="flex flex-col justify-center w-full h-full mb-10 text-center">
         <h4 className='pb-2'>
           {
             winner
@@ -58,7 +58,7 @@ export const TicTacToe = () => {
             }
           </tbody>
         </table>
-      </div>
+      </main>
       <Dialog dialogRef={dialogRef}>
         <div className='text-center'>
           <h4 className='pb-2'>Created with</h4>

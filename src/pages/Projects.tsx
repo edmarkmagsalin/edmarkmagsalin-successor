@@ -22,7 +22,7 @@ export const Projects = () => {
     },
   ]
   return (
-    <div className='page-container'>
+    <>
       {
         projectsConfig.map((config, index) => {
           return (
@@ -45,7 +45,7 @@ export const Projects = () => {
           )
         })
       }
-    </div>
+    </>
   )
 }
 

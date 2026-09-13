@@ -32,7 +32,7 @@ export const Skills = () => {
     },
   ]
   return (
-    <div className='page-container'>
+    <>
       {
         skillsConfig.map((config, index) => {
           return (
@@ -51,7 +51,7 @@ export const Skills = () => {
           )
         })
       }
-    </div>
+    </>
   )
 }
 
