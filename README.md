@@ -13,6 +13,13 @@ The React Compiler is enabled on this template. See [this documentation](https:/
 
 Note: This will impact Vite dev & build performances.
 
+## Live links
+
+The live version of this repo can be viewed here:
+
+- https://edmarkmagsalin.onrender.com/
+- https://edmarkmagsalin.netlify.app/
+
 ## Expanding the Oxlint configuration
 
 If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
